@@ -21,13 +21,14 @@ APPLE_COLOR = (255, 0, 0)
 SNAKE_COLOR = (0, 255, 0)
 
 # Скорость движения змейки:
-SPEED = 7
+SPEED = 15
 
 # Настройка игрового окна:
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 clock = pygame.time.Clock()
 
 class gameObject:
+    """Класс игрового объекта"""
     def __init__(self, position=None):
         self.position = position if position else CENTER_POSITION
         self.bodyColor = None
@@ -36,6 +37,7 @@ class gameObject:
         raise NotImplementedError("Метод draw() должен быть реализован в подклассе")
 
 class Apple(gameObject):
+    """Класс яблока"""
     def __init__(self):
         super().__init__()
         self.bodyColor = APPLE_COLOR
@@ -53,6 +55,7 @@ class Apple(gameObject):
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 class Snake(gameObject):
+    """Класс змейки"""
     def __init__(self):
         super().__init__()
         self.bodyColor = SNAKE_COLOR
@@ -107,6 +110,7 @@ class Snake(gameObject):
             pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
 
 def handleKeys(gameObject):
+    """Метод считывания сигналов клавиш"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -139,7 +143,7 @@ def main():
         # Проверка на съедение яблока
         if snake.getHeadPosition() == apple.position:
             snake.length += 1
-            snake.update_title()  # Обновляем заголовок при увеличении длины
+            snake.updateTitle()  # Обновляем заголовок при увеличении длины
             apple.randomizePosition()
             while apple.position in snake.positions:
                 apple.randomizePosition()

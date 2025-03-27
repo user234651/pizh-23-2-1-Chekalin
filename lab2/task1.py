@@ -1,18 +1,22 @@
 class BeeElephant:
+    """Класс Пчелослон"""
     def __init__(self, bee_part, elephant_part):
         self.bee_part = bee_part
         self.elephant_part = elephant_part
 
     def fly(self):
+        """Метод, возвращающий True, если часть пчелы больше части слона"""
         return self.bee_part >= self.elephant_part
 
     def trumpet(self):
+        """Метод, возвращающий True, если часть слона больше части пчелы"""
         if self.elephant_part >= self.bee_part:
             return "tu-tu-doo-doo!"
         else:
             return "wzzzzzz"
 
     def eat(self, meal, value):
+        """Метод поедания, который изменяет соотношение пчелы и слона в зависимости от поедаемой пищи"""
         if meal == "nectar":
             self.elephant_part -= value
             self.bee_part += value
@@ -25,7 +29,9 @@ class BeeElephant:
         self.elephant_part = max(0, min(self.elephant_part, 100))
 
     def get_parts(self):
+        """Метод, возвращающий соотношение пчелы и слона"""
         return [self.bee_part, self.elephant_part]
+
 print("Вариант 9")
 # Пример 1
 be = BeeElephant(3, 2)

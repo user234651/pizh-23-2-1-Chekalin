@@ -23,6 +23,7 @@ class Roman:
 
     @staticmethod
     def toArabic(romanStr):
+        """Метод преобразования римских чисел в арабские"""
         result = 0
         i = 0
         romanStr = romanStr.upper()
@@ -37,6 +38,7 @@ class Roman:
 
     @staticmethod
     def toRoman(arabicNum):
+        """Метод преобразования арабских чисел в римские"""
         if arabicNum <= 0:
             raise ValueError("Roman numbers must be positive")
         roman_num = []
@@ -47,6 +49,7 @@ class Roman:
         return ''.join(roman_num)
 
     def __add__(x, y):
+        """Метод сложения"""
         if isinstance(y, Roman):
             return Roman(x.value + y.value)
         elif isinstance(y, int):
@@ -55,6 +58,7 @@ class Roman:
             raise TypeError("Can only add Roman or int")
 
     def __sub__(x, y):
+        """Метод вычитания"""
         if isinstance(y, Roman):
             result = x.value - y.value
         elif isinstance(y, int):
@@ -66,6 +70,7 @@ class Roman:
         return Roman(result)
 
     def __mul__(x, y):
+        """Метод умножения"""
         if isinstance(y, Roman):
             return Roman(x.value * y.value)
         elif isinstance(y, int):
@@ -74,6 +79,7 @@ class Roman:
             raise TypeError("Can only multiply by Roman or int")
 
     def __truediv__(x, y):
+        """Метод деления без остатка"""
         if isinstance(y, Roman):
             result = x.value // y.value
         elif isinstance(y, int):
@@ -92,14 +98,14 @@ a = Roman("XIV")
 b = Roman(5)
 
 # Арифметические операции
-print(a + b)
-print(a - b)
-print(a * b)
-print(a / b)
+print(a + b) # XIX
+print(a - b) # IX
+print(a * b) # LXX
+print(a / b) # II
 
 # Альтернативные конструкторы
 c = Roman.toRoman(42)
 d = Roman.toArabic("XX")
 
-print(c)
-print(d)
+print(c) # XLII
+print(d) # 20

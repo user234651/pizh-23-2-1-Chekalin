@@ -1,4 +1,5 @@
 class Pizza:
+    """Класс пиццы"""
     def __init__(x):
         x.name = "Базовая пицца"
         x.dough = "обычное тесто"
@@ -7,18 +8,22 @@ class Pizza:
         x.price = 0
 
     def prepare(x):
+        """Метод готовки"""
         print(f"Готовим {x.name}:")
         print(f" - замешиваем {x.dough} тесто")
         print(f" - добавляем {x.sauce} соус")
         print(" - добавляем начинку:", ", ".join(x.toppings))
 
     def bake(x):
+        """Метод выпекания"""
         print("Выпекаем пиццу... Готово!")
 
     def cut(x):
+        """Метод нарезки"""
         print("Нарезаем пиццу на 8 кусочков")
 
     def pack(x):
+        """Метод упаковки"""
         print("Упаковываем пиццу в фирменную коробку")
 
     def __str__(x):
@@ -26,6 +31,7 @@ class Pizza:
 
 
 class Pepperoni(Pizza):
+    """Класс Пепперони"""
     def __init__(x):
         super().__init__()
         x.name = "Пепперони"
@@ -36,6 +42,7 @@ class Pepperoni(Pizza):
 
 
 class Barbecue(Pizza):
+    """Класс Барбекю"""
     def __init__(x):
         super().__init__()
         x.name = "Барбекю"
@@ -46,6 +53,7 @@ class Barbecue(Pizza):
 
 
 class Seafood(Pizza):
+    """Класс Дары моря"""
     def __init__(x):
         super().__init__()
         x.name = "Дары моря"
@@ -56,6 +64,7 @@ class Seafood(Pizza):
 
 
 class Order:
+    """Класс, позволяющий сделать заказ"""
     orderCounter = 0
     def __init__(x):
         Order.orderCounter += 1
@@ -63,12 +72,15 @@ class Order:
         x.pizzas = []
 
     def addPizza(x, pizza):
+        """Метод добавления пиццы в заказ"""
         x.pizzas.append(pizza)
 
     def calculateTotal(x):
+        """Метод подсчёта стоимости"""
         return sum(pizza.price for pizza in x.pizzas)
 
     def execute(x):
+        """Метод выполнения заказа"""
         for pizza in x.pizzas:
             pizza.prepare()
             pizza.bake()
@@ -84,6 +96,7 @@ class Order:
 
 
 class Terminal:
+    """Класс, позволяющий пользователю взаимодействовать с программой"""
     def __init__(x):
         x.menu = [
             Pepperoni(),
@@ -93,15 +106,18 @@ class Terminal:
         x.currentOrder = None
 
     def showMenu(x):
+        """Метод демонстрации меню"""
         print("Меню пиццерии:")
         for i, pizza in enumerate(x.menu, 1):
             print(f"{i}. {pizza}")
 
     def createOrder(x):
+        """Метод создания заказа"""
         x.currentOrder = Order()
         print("Создан новый заказ")
 
     def processCommand(x, choice):
+        """Метод обработки пользовательского ввода"""
         try:
             choice = int(choice)
             if 1 <= choice <= len(x.menu):
@@ -114,6 +130,7 @@ class Terminal:
             print("Пожалуйста, введите номер пиццы")
 
     def acceptPayment(x):
+        """Метод принятия платежа"""
         if not x.currentOrder or not x.currentOrder.pizzas:
             print("Нет активного заказа")
             return False
@@ -136,6 +153,7 @@ class Terminal:
                 print("Пожалуйста, введите число")
 
     def run(x):
+        """Точка входа в программу"""
         print("Добро пожаловать в пиццерию!")
         x.showMenu()
         x.createOrder()

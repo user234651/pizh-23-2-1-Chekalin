@@ -1,4 +1,5 @@
 class bankDeposit:
+    """Класс Депозита"""
     def __init__(self, name, minAmount, currency, periodMonths, rate):
         self.name = name
         self.minAmount = minAmount
@@ -7,9 +8,11 @@ class bankDeposit:
         self.rate = rate  # годовая процентная ставка
 
     def calculateProfit(self, amount):
+        """Метод подсчёта прибыли, переопределяется в дочерних классах"""
         raise NotImplementedError("Метод должен быть реализован в подклассах")
 
     def getConditions(self):
+        """Метод, возвращающий статус программы"""
         return (f"{self.name}\n"
                 f"Минимальная сумма: {self.minAmount:,} {self.currency}\n"
                 f"Срок: {self.periodMonths} мес.\n"
@@ -17,7 +20,9 @@ class bankDeposit:
 
 
 class termDeposit(bankDeposit):
+    """Срочный депозит"""
     def calculateProfit(self, amount):
+        """Метод подсчёта прибыли"""
         if amount < self.minAmount:
             raise ValueError(f"Минимальная сумма для вклада {self.minAmount} {self.currency}")
         
@@ -30,12 +35,14 @@ class termDeposit(bankDeposit):
 
 
 class BonusDeposit(bankDeposit):
+    """Бонусный депозит"""
     def __init__(self, name, minAmount, currency, periodMonths, rate, bonusThreshold, bonusRate):
         super().__init__(name, minAmount, currency, periodMonths, rate)
         self.bonusThreshold = bonusThreshold
         self.bonusRate = bonusRate  # % от прибыли
 
     def calculateProfit(self, amount):
+        """Метод подсчёта прибыли"""
         if amount < self.minAmount:
             raise ValueError(f"Минимальная сумма для вклада {self.minAmount} {self.currency}")
         
@@ -55,7 +62,9 @@ class BonusDeposit(bankDeposit):
 
 
 class capDeposit(bankDeposit):
+    """Депозит капитализации"""
     def calculateProfit(self, amount):
+        """Метод подсчёта прибыли"""
         if amount < self.minAmount:
             raise ValueError(f"Минимальная сумма для вклада {self.minAmount} {self.currency}")
         
@@ -71,6 +80,7 @@ class capDeposit(bankDeposit):
 
 
 class depositAdvisor:
+    """Класс подбора депозита"""
     def __init__(self):
         self.deposits = [
             termDeposit("Срочный+", 10_000, "RUB", 12, 6.5),
@@ -80,7 +90,8 @@ class depositAdvisor:
             capDeposit("Международный", 1_000, "EUR", 24, 4.5)
         ]
 
-    def find_best_deposit(self, amount, currency, period):
+    def findBestDeposit(self, amount, currency, period):
+        """Метод подбора депозита"""
         suitable = []
         for deposit in self.deposits:
             if (deposit.currency == currency and 
@@ -100,12 +111,14 @@ class depositAdvisor:
         return suitable[0]
 
     def showAllDeposits(self):
+        """Метод показа меню депозитов"""
         print("Доступные вклады:")
         for i, deposit in enumerate(self.deposits, 1):
             print(f"{i}. {deposit}\n")
 
 
 def main():
+    """Точка входа в программу"""
     advisor = depositAdvisor()
     
     while True:
@@ -122,7 +135,7 @@ def main():
                 currency = input("Введите валюту (RUB/USD/EUR): ").upper()
                 period = int(input("Введите срок (мес.): "))
                 
-                result = advisor.find_best_deposit(amount, currency, period)
+                result = advisor.findBestDeposit(amount, currency, period)
                 if result:
                     deposit, profit = result
                     print(f"\nРекомендуем вклад: {deposit.name}")
